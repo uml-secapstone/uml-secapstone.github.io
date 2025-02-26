@@ -1,71 +1,89 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const width = 600, height = 400;
-    const svg = d3.select("#network-visualization")
-                  .append("svg")
-                  .attr("width", width)
-                  .attr("height", height);
+    const canvas = document.getElementById("classificationCanvas");
+    const ctx = canvas.getContext("2d");
 
-    // Define Neural Network Structure
-    const layers = [2, 5, 1]; // 2 input, 5 hidden, 1 output
-    const neuronRadius = 20;
-    const layerSpacing = width / (layers.length + 1);
-    let neurons = [];
+    let model;
+    let learningRate = 0.03;
+    let hiddenNeurons = 5;
+    let activationFunction = "relu";
 
-    // Create Neurons
-    layers.forEach((count, layerIndex) => {
-        let x = layerSpacing * (layerIndex + 1);
-        for (let i = 0; i < count; i++) {
-            let y = (height / (count + 1)) * (i + 1);
-            neurons.push({ x, y, layer: layerIndex });
-        }
+    // Event Listeners for user controls
+    document.getElementById("learningRate").addEventListener("input", function () {
+        learningRate = parseFloat(this.value);
+        document.getElementById("lrDisplay").textContent = this.value;
     });
 
-    // Create Connections
-    let connections = [];
-    neurons.forEach((neuronA, i) => {
-        neurons.forEach((neuronB, j) => {
-            if (neuronA.layer + 1 === neuronB.layer) {
-                connections.push({ source: neuronA, target: neuronB, weight: Math.random() * 2 - 1 });
-            }
-        });
+    document.getElementById("hiddenNeurons").addEventListener("change", function () {
+        hiddenNeurons = parseInt(this.value);
     });
 
-    // Draw Connections
-    let connectionLines = svg.selectAll("line")
-        .data(connections)
-        .enter().append("line")
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y)
-        .style("stroke", d => d.weight > 0 ? "blue" : "red")
-        .style("stroke-width", d => Math.abs(d.weight) * 2);
+    document.getElementById("activationFunction").addEventListener("change", function () {
+        activationFunction = this.value;
+    });
 
-    // Draw Neurons
-    let neuronCircles = svg.selectAll("circle")
-        .data(neurons)
-        .enter().append("circle")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("r", neuronRadius)
-        .style("fill", "#3498db");
-
-    // Simulate Training
     document.getElementById("start-training").addEventListener("click", function () {
-        setInterval(() => {
-            // Update weights randomly
-            connections.forEach(d => d.weight += (Math.random() - 0.5) * 0.1);
-
-            // Animate connections based on weight change
-            connectionLines.transition()
-                .duration(500)
-                .style("stroke-width", d => Math.abs(d.weight) * 2)
-                .style("stroke", d => d.weight > 0 ? "blue" : "red");
-
-            // Simulate neuron activation
-            neuronCircles.transition()
-                .duration(500)
-                .style("fill", () => Math.random() > 0.5 ? "#e74c3c" : "#3498db");
-        }, 1000);
+        createAndTrainModel();
     });
+
+    function createAndTrainModel() {
+        // Generate synthetic data
+        const data = generateSyntheticData(200);
+        const { xs, ys } = preprocessData(data);
+
+        // Create a simple model
+        model = tf.sequential();
+        model.add(tf.layers.dense({ units: hiddenNeurons, activation: activationFunction, inputShape: [2] }));
+        model.add(tf.layers.dense({ units: 1, activation: "sigmoid" }));
+
+        // Compile model
+        model.compile({
+            optimizer: tf.train.adam(learningRate),
+            loss: "binaryCrossentropy"
+        });
+
+        // Train model
+        async function trainModel() {
+            for (let i = 0; i < 50; i++) {
+                await model.fit(xs, ys, { epochs: 1 });
+                drawDecisionBoundary();
+            }
+        }
+
+        trainModel();
+    }
+
+    function generateSyntheticData(numPoints) {
+        let data = [];
+        for (let i = 0; i < numPoints; i++) {
+            let x = Math.random() * 2 - 1;
+            let y = Math.random() * 2 - 1;
+            let label = x * x + y * y < 0.5 ? 1 : 0;
+            data.push({ x, y, label });
+        }
+        return data;
+    }
+
+    function preprocessData(data) {
+        const xs = tf.tensor2d(data.map(d => [d.x, d.y]));
+        const ys = tf.tensor2d(data.map(d => [d.label]));
+        return { xs, ys };
+    }
+
+    function drawDecisionBoundary() {
+        const resolution = 20;
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+
+        for (let i = 0; i < canvas.width; i += resolution) {
+            for (let j = 0; j < canvas.height; j += resolution) {
+                let x = (i / canvas.width) * 2 - 1;
+                let y = (j / canvas.height) * 2 - 1;
+
+                let prediction = model.predict(tf.tensor2d([[x, y]])).dataSync()[0];
+                let color = prediction > 0.5 ? "rgba(255, 165, 0, 0.5)" : "rgba(30, 144, 255, 0.5)";
+
+                ctx.fillStyle = color;
+                ctx.fillRect(i, j, resolution, resolution);
+            }
+        }
+    }
 });

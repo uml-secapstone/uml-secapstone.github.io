@@ -34,28 +34,46 @@
 
 							<!-- Content -->
 							<!-- Neural Network Visualization -->
-								<section>
-									<header class="main">
-										<h1>Neural Network Demo</h1>
-									</header>
+							<section>
+								<header class="main">
+									<h1>Interactive Neural Network Demo</h1>
+								</header>
+							
+								<div>
+									<label>Learning Rate:</label>
+									<input type="range" id="learningRate" min="0.001" max="0.1" step="0.001" value="0.03">
+									<span id="lrDisplay">0.03</span>
+								</div>
+							
+								<div>
+									<label>Hidden Neurons:</label>
+									<input type="number" id="hiddenNeurons" min="1" max="10" value="5">
+								</div>
+							
+								<div>
+									<label>Activation Function:</label>
+									<select id="activationFunction">
+										<option value="relu">ReLU</option>
+										<option value="sigmoid">Sigmoid</option>
+										<option value="tanh">Tanh</option>
+									</select>
+								</div>
+							
+								<button id="start-training">Start Training</button>
+								<canvas id="classificationCanvas" width="400" height="400"></canvas>
+							</section>
+							
+							<!-- Load TensorFlow.js and D3.js -->
+							<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+							<script src="https://d3js.org/d3.v6.min.js"></script>
+							
+							<!-- Custom Script -->
+							<script src="assets/js/nn-visualization.js"></script>
+							
 
-									<div id="network-visualization"></div> <!-- Placeholder for the animation -->
-
-									<button id="start-training">Start Training</button> <!-- Button to trigger real-time updates -->
-
-									<p>Watch the neural network learn in real-time!</p>
-								</section>
-
-								<!-- Load TensorFlow.js and D3.js -->
-								<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-								<script src="https://d3js.org/d3.v6.min.js"></script>
-
-								<!-- Custom Script -->
-								<script src="assets/js/nn-visualization.js"></script>
-
-								<section>
-									<header class="main">
-										<h1>Generic</h1>
+							<section>
+								<header class="main">
+									<h1>Generic</h1>
 									</header>
 
 									<span class="image main"><img src="images/pic12.jpg" alt="" /></span>
@@ -63,7 +81,7 @@
 									<p>Rowdy the Riverhawk is a Riverhawk who Hawks and is dressed in a bunch of different colors </p>
 
 									
-								</section>
+							</section>
 
 						</div>
 					</div>
