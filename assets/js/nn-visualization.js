@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let learningRate = 0.03;
     let hiddenNeurons = 5;
     let activationFunction = "relu";
+    let trainingData = [];
 
     // Event Listeners for user controls
     document.getElementById("learningRate").addEventListener("input", function () {
@@ -22,45 +23,64 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("start-training").addEventListener("click", function () {
+        if (trainingData.length < 10) {
+            alert("Please add at least 10 training points by clicking on the canvas.");
+            return;
+        }
         createAndTrainModel();
     });
 
-    function createAndTrainModel() {
-        // Generate synthetic data
-        const data = generateSyntheticData(200);
-        const { xs, ys } = preprocessData(data);
+    document.getElementById("reset-data").addEventListener("click", function () {
+        trainingData = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
 
-        // Create a simple model
+    // Handle user clicks to add new training data
+    canvas.addEventListener("click", function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / canvas.width * 2 - 1;
+        const y = (event.clientY - rect.top) / canvas.height * 2 - 1;
+        const label = event.shiftKey ? 1 : 0; // Shift+Click for one class, normal click for another
+
+        trainingData.push({ x, y, label });
+        drawPoint(x, y, label);
+    });
+
+    function drawPoint(x, y, label) {
+        ctx.fillStyle = label === 1 ? "orange" : "blue";
+        ctx.beginPath();
+        ctx.arc((x + 1) * 200, (y + 1) * 200, 5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function createAndTrainModel() {
+        const { xs, ys } = preprocessData(trainingData);
+
         model = tf.sequential();
         model.add(tf.layers.dense({ units: hiddenNeurons, activation: activationFunction, inputShape: [2] }));
         model.add(tf.layers.dense({ units: 1, activation: "sigmoid" }));
 
-        // Compile model
         model.compile({
             optimizer: tf.train.adam(learningRate),
-            loss: "binaryCrossentropy"
+            loss: "binaryCrossentropy",
+            metrics: ["accuracy"]
         });
 
-        // Train model
         async function trainModel() {
             for (let i = 0; i < 50; i++) {
-                await model.fit(xs, ys, { epochs: 1 });
+                const history = await model.fit(xs, ys, { epochs: 1 });
+
+                const loss = history.history.loss[0].toFixed(4);
+                const accuracy = (history.history.acc ? history.history.acc[0] : 0).toFixed(4);
+
+                document.getElementById("loss").textContent = loss;
+                document.getElementById("accuracy").textContent = accuracy;
+
                 drawDecisionBoundary();
             }
         }
 
         trainModel();
-    }
-
-    function generateSyntheticData(numPoints) {
-        let data = [];
-        for (let i = 0; i < numPoints; i++) {
-            let x = Math.random() * 2 - 1;
-            let y = Math.random() * 2 - 1;
-            let label = x * x + y * y < 0.5 ? 1 : 0;
-            data.push({ x, y, label });
-        }
-        return data;
     }
 
     function preprocessData(data) {
@@ -71,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function drawDecisionBoundary() {
         const resolution = 20;
-        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (let i = 0; i < canvas.width; i += resolution) {
             for (let j = 0; j < canvas.height; j += resolution) {
@@ -85,5 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.fillRect(i, j, resolution, resolution);
             }
         }
+
+        // Redraw user input points
+        trainingData.forEach(d => drawPoint(d.x, d.y, d.label));
     }
 });
