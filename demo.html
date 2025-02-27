@@ -1,126 +1,169 @@
 <!DOCTYPE HTML>
 <!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        
+        <!-- Add visualization libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0"></script>
+    </head>
+    <body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+        <!-- Wrapper -->
+        <div id="wrapper">
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
 
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h1>Demo</h1>
-									</header>
+                    <!-- Demo Section -->
+                    <section>
+                        <header class="main">
+                            <h1>Neural Network Demo</h1>
+                        </header>
 
-									<span class="image main"><img src="images/pic12.png" alt="" /></span>
+                        <!-- Visualization Containers -->
+                        <div style="display: flex; flex-direction: column; gap: 2em;">
+                            <div>
+                                <canvas id="trainingChart"></canvas>
+                            </div>
+                            <div>
+                                <canvas id="networkVisualization"></canvas>
+                            </div>
+                            <button id="startTraining" onclick="startTraining()">Start Training</button>
+                        </div>
 
-									<p>Rowdy the Riverhawk is the mascot of UML</p>									
-									
-								</section>
-								
-								
-								<section>
-									<header class="main">
-										<h1>Interactive Neural Network Demo</h1>
-									</header>
-								
-									<div>
-										<label>Learning Rate:</label>
-										<input type="range" id="learningRate" min="0.001" max="0.1" step="0.001" value="0.03">
-										<span id="lrDisplay">0.03</span>
-									</div>
-								
-									<div>
-										<label>Hidden Neurons:</label>
-										<input type="number" id="hiddenNeurons" min="1" max="10" value="5">
-									</div>
-								
-									<div>
-										<label>Activation Function:</label>
-										<select id="activationFunction">
-											<option value="relu">ReLU</option>
-											<option value="sigmoid">Sigmoid</option>
-											<option value="tanh">Tanh</option>
-										</select>
-									</div>
-								
-									<button id="start-training">Start Training</button>
-									<button id="reset-data">Reset Data</button>
-								
-									<h3>Live Metrics:</h3>
-									<p>Loss: <span id="loss">0.0</span></p>
-									<p>Accuracy: <span id="accuracy">0.0</span></p>
-								
-									<canvas id="classificationCanvas" width="400" height="400"></canvas>
-								</section>
-								
-								<!-- Load TensorFlow.js and D3.js -->
-								<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-								<script src="https://d3js.org/d3.v6.min.js"></script>
-								
-								<!-- Custom Script -->
-								<script src="assets/js/nn-visualization.js"></script>
-								
+                        <p>Watch real-time training of a neural network!</p>
+                    </section>
 
+                    <!-- ... rest of your existing content ... -->
 
-								
+                </div>
+            </div>
+        </div>
 
-						</div>
-					</div>
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
 
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
+        <!-- Add custom demo script -->
+        <script>
+            let model;
+            let trainingChart;
+            let trainingData = { loss: [], accuracy: [] };
 
-							
+            // Initialize chart
+            function initChart() {
+                const ctx = document.getElementById('trainingChart').getContext('2d');
+                trainingChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: 'Loss',
+                            data: [],
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }, {
+                            label: 'Accuracy',
+                            data: [],
+                            borderColor: 'rgb(54, 162, 235)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
 
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="demo.html">Demo</a></li>
-										<li><a href="elements.html">Elements</a></li>
-										<li><a href="about.html">About</a></li>
-									</ul>
-								</nav>
+            // Create simple neural network model
+            function createModel() {
+                const model = tf.sequential({
+                    layers: [
+                        tf.layers.dense({ units: 4, activation: 'relu', inputShape: [2] }),
+                        tf.layers.dense({ units: 1, activation: 'sigmoid' })
+                    ]
+                });
 
-							
-					
-								
+                model.compile({
+                    optimizer: 'adam',
+                    loss: 'binaryCrossentropy',
+                    metrics: ['accuracy']
+                });
 
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
+                return model;
+            }
 
-						</div>
-					</div>
+            // Generate synthetic training data
+            function generateData() {
+                const xs = tf.randomUniform([100, 2]);
+                const ys = xs.sum(1).greater(1).cast('float32');
+                return { xs, ys };
+            }
 
-			</div>
+            // Training loop
+            async function trainModel() {
+                const { xs, ys } = generateData();
+                
+                await model.fit(xs, ys, {
+                    epochs: 20,
+                    batchSize: 32,
+                    callbacks: {
+                        onEpochEnd: (epoch, logs) => {
+                            // Update chart
+                            trainingData.loss.push(logs.loss);
+                            trainingData.accuracy.push(logs.acc);
+                            
+                            trainingChart.data.labels.push(epoch);
+                            trainingChart.data.datasets[0].data.push(logs.loss);
+                            trainingChart.data.datasets[1].data.push(logs.acc);
+                            trainingChart.update();
+                            
+                            // Update network visualization
+                            visualizeNetwork();
+                        }
+                    }
+                });
+            }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+            // Simple network visualization
+            function visualizeNetwork() {
+                const canvas = document.getElementById('networkVisualization');
+                const ctx = canvas.getContext('2d');
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw neural network
+                // (Implement your custom visualization logic here)
+                // This could include drawing nodes, connections, activation levels, etc.
+            }
 
-	</body>
+            // Start training handler
+            async function startTraining() {
+                document.getElementById('startTraining').disabled = true;
+                model = createModel();
+                await trainModel();
+                document.getElementById('startTraining').disabled = false;
+            }
+
+            // Initialize when page loads
+            window.onload = () => {
+                initChart();
+                visualizeNetwork();
+            };
+        </script>
+    </body>
 </html>
