@@ -1,6 +1,11 @@
 <!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-    <head>
+	<head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <title>Neural Network Demo</title>
@@ -17,77 +22,106 @@
             .feature-controls { margin: 20px 0; }
         </style>
     </head>
-    <body>
-        <div class="container">
-            <div class="controls">
-                <h2>Controls</h2>
+	<body class="is-preload">
 
-                <!-- Network Architecture -->
-                <div class="layer-controls">
-                    <h3>Network Layers</h3>
-                    <div id="layerControls"></div>
-                    <button onclick="addLayer()">+ Add Layer</button>
-                    <button onclick="removeLayer()">- Remove Layer</button>
-                </div>
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-                <!-- Hyperparameters -->
-                <div class="hyperparams">
-                    <h3>Training Parameters</h3>
-                    <label>Learning Rate: <input type="number" id="learningRate" value="0.01" step="0.001"></label>
-                    <label>Epochs: <input type="number" id="epochs" value="50"></label>
-                    <label>Batch Size: <input type="number" id="batchSize" value="32"></label>
-                </div>
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
 
-                <!-- Features -->
-                <div class="feature-controls">
-                    <h3>Input Features</h3>
-                    <label><input type="checkbox" name="feature" value="x"> X</label>
-                    <label><input type="checkbox" name="feature" value="y"> Y</label>
-                    <label><input type="checkbox" name="feature" value="x*y"> X*Y</label>
-                    <label><input type="checkbox" name="feature" value="x²"> X²</label>
-                    <label><input type="checkbox" name="feature" value="y²"> Y²</label>
-                </div>
+							<!-- Header -->
+								
 
-                <button onclick="startTraining()">Start Training</button>
-            </div>
-
-            <div class="visualization">
-                <canvas id="networkCanvas" class="network-canvas" width="800" height="400"></canvas>
-                <canvas id="lossChart"></canvas>
-            </div>
-        </div>
-
-		<div id="sidebar">
-			<div class="inner">
-
-				<!-- Search -->
+							<!-- Content -->
+							<section>
+							<div class="container">
+								<div class="controls">
+									<h2>Controls</h2>
 					
-				<!-- Menu -->
-					<nav id="menu">
-						<header class="major">
-							<h2>Menu</h2>
-						</header>
-						<ul>
-							<li><a href="index.html">Homepage</a></li>
-							<li><a href="demo.html">Demo</a></li>
-							<li><a href="about.html">About</a></li>
+									<!-- Network Architecture -->
+									<div class="layer-controls">
+										<h3>Network Layers</h3>
+										<div id="layerControls"></div>
+										<button onclick="addLayer()">+ Add Layer</button>
+										<button onclick="removeLayer()">- Remove Layer</button>
+									</div>
+					
+									<!-- Hyperparameters -->
+									<div class="hyperparams">
+										<h3>Training Parameters</h3>
+										<label>Learning Rate: <input type="number" id="learningRate" value="0.01" step="0.001"></label>
+										<label>Epochs: <input type="number" id="epochs" value="50"></label>
+										<label>Batch Size: <input type="number" id="batchSize" value="32"></label>
+									</div>
+					
+									<!-- Features -->
+									<div class="feature-controls">
+										<h3>Input Features</h3>
+										<label><input type="checkbox" name="feature" value="x"> X</label>
+										<label><input type="checkbox" name="feature" value="y"> Y</label>
+										<label><input type="checkbox" name="feature" value="x*y"> X*Y</label>
+										<label><input type="checkbox" name="feature" value="x²"> X²</label>
+										<label><input type="checkbox" name="feature" value="y²"> Y²</label>
+									</div>
+					
+									<button onclick="startTraining()">Start Training</button>
+								</div>
+					
+								<div class="visualization">
+									<canvas id="networkCanvas" class="network-canvas" width="800" height="400"></canvas>
+									<canvas id="lossChart"></canvas>
+								</div>
+							</div>
+						</section>
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="demo.html">Demo</a></li>
+										<li><a href="about.html">About</a></li>
+										
+								</nav>
+
 							
-					</nav>
 
-				
+							<!-- Section -->
+								
 
-				<!-- Section -->
-					
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
+						</div>
+					</div>
 
 			</div>
-		</div>
 
-        <!-- Import external JavaScript -->
-        <script src="assets/js/demo.js"></script>
-    </body>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/demo.js"></script>
+
+	</body>
 </html>
+
+
+
+      
