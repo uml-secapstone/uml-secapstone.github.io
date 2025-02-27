@@ -31,6 +31,48 @@
 									<p>Rowdy the Riverhawk is the mascot of UML</p>									
 									
 								</section>
+								<section>
+									<header class="main">
+										<h1>Interactive Neural Network Demo</h1>
+									</header>
+								
+									<div>
+										<label>Learning Rate:</label>
+										<input type="range" id="learningRate" min="0.001" max="0.1" step="0.001" value="0.03">
+										<span id="lrDisplay">0.03</span>
+									</div>
+								
+									<div>
+										<label>Hidden Neurons:</label>
+										<input type="number" id="hiddenNeurons" min="1" max="10" value="5">
+									</div>
+								
+									<div>
+										<label>Activation Function:</label>
+										<select id="activationFunction">
+											<option value="relu">ReLU</option>
+											<option value="sigmoid">Sigmoid</option>
+											<option value="tanh">Tanh</option>
+										</select>
+									</div>
+								
+									<button id="start-training">Start Training</button>
+									<button id="reset-data">Reset Data</button>
+								
+									<h3>Live Metrics:</h3>
+									<p>Loss: <span id="loss">0.0</span></p>
+									<p>Accuracy: <span id="accuracy">0.0</span></p>
+								
+									<canvas id="classificationCanvas" width="400" height="400"></canvas>
+								</section>
+								
+								<!-- Load TensorFlow.js and D3.js -->
+								<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+								<script src="https://d3js.org/d3.v6.min.js"></script>
+								
+								<!-- Custom Script -->
+								<script src="assets/js/nn-visualization.js"></script>
+								
 
 						</div>
 					</div>
@@ -50,7 +92,7 @@
 										<li><a href="index.html">Homepage</a></li>
 										<li><a href="demo.html">Demo</a></li>
 										<li><a href="elements.html">Elements</a></li>
-										<li><a href="demo.html">About</a></li>
+										<li><a href="about.html">About</a></li>
 									</ul>
 								</nav>
 
