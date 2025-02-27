@@ -5,7 +5,7 @@ let networkCanvas = document.getElementById('networkCanvas');
 let ctx = networkCanvas.getContext('2d');
 let layerSizes = [2, 4, 1]; // Initial network architecture
 
-// Initialize chart
+// Initialize the loss chart
 function initChart() {
     chart = new Chart(document.getElementById('lossChart'), {
         type: 'line',
@@ -22,10 +22,35 @@ function initChart() {
     });
 }
 
-// Neural network visualization with animations
+// Adds a new layer with 3 neurons (default)
+function addLayer() {
+    layerSizes.splice(layerSizes.length - 1, 0, 3); // Insert before output layer
+    updateLayerControls();
+    drawNetwork();
+}
+
+// Removes last hidden layer
+function removeLayer() {
+    if (layerSizes.length > 2) { // Keep input & output layers
+        layerSizes.splice(layerSizes.length - 2, 1);
+        updateLayerControls();
+        drawNetwork();
+    }
+}
+
+// Updates UI layer controls dynamically
+function updateLayerControls() {
+    const controlPanel = document.getElementById('layerControls');
+    controlPanel.innerHTML = '';
+    layerSizes.forEach((size, index) => {
+        let label = index === 0 ? 'Input' : index === layerSizes.length - 1 ? 'Output' : `Hidden ${index}`;
+        controlPanel.innerHTML += `<div>${label}: ${size} neurons</div>`;
+    });
+}
+
+// Draws the neural network with animations
 function drawNetwork(activeLayer = -1) {
     ctx.clearRect(0, 0, networkCanvas.width, networkCanvas.height);
-
     const layerPadding = 100;
     const neuronRadius = 15;
     const colors = ['#ff7675', '#74b9ff', '#55efc4'];
@@ -58,7 +83,7 @@ function drawNetwork(activeLayer = -1) {
     });
 }
 
-// Training data
+// Generates synthetic training data
 function generateData() {
     const numSamples = 1000;
     const xs = tf.randomUniform([numSamples, 2], -1, 1);
@@ -66,7 +91,7 @@ function generateData() {
     return { xs, ys };
 }
 
-// Training animation
+// Animates network layers during training
 async function animateLayers(epoch) {
     for (let i = 0; i < layerSizes.length; i++) {
         drawNetwork(i);
@@ -74,12 +99,12 @@ async function animateLayers(epoch) {
     }
 }
 
-// Model setup
+// Creates the TensorFlow.js model
 function createModel() {
     model = tf.sequential();
     model.add(tf.layers.dense({
         units: layerSizes[0],
-        inputShape: [getSelectedFeatures().length],
+        inputShape: [2],
         activation: 'relu'
     }));
 
@@ -102,7 +127,12 @@ function createModel() {
     });
 }
 
-// Training function
+// Processes input features (only uses first two for now)
+function processFeatures(xs) {
+    return xs;
+}
+
+// Model training
 async function trainModel() {
     const { xs, ys } = generateData();
     const processedXs = processFeatures(xs);
@@ -122,7 +152,7 @@ async function trainModel() {
     });
 }
 
-// Start training
+// Starts training
 async function startTraining() {
     if (trainingActive) return;
     trainingActive = true;
@@ -138,5 +168,6 @@ async function startTraining() {
 // Initialize
 window.onload = () => {
     initChart();
+    updateLayerControls();
     drawNetwork();
 };
