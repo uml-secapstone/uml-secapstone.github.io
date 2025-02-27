@@ -1,103 +1,116 @@
 <!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
-		
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			.team-member {
+				display: flex;
+				align-items: center;
+				margin-bottom: 30px;
+				gap: 20px;
+			}
+
+			.team-member img {
+				width: 100px; /* Adjust size as needed */
+				height: 100px;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			.team-member .bio {
+				flex: 1; /* Ensures the text fills the available space */
+			}
+
+			footer {
+				text-align: center;
+				padding: 20px;
+				background: #f4f4f4;
+				margin-top: 40px;
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
 		<!-- Wrapper -->
-			<div id="wrapper">
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<!-- Header -->
+					<header class="main">
+						<h1>About the Team</h1>
+					</header>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-							<!-- Header -->
-								
-
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h1>About the Team</h1>
-									</header>
-
-									
-									<h2>Professor</h2>
-									<p><span class="image left"><img src="images/pic01.jpg" alt="" /></span></p>
-                                    <p>this professor oversees the project and </p>
-
-									
-									<h2>Student</h2>
-									<p><span class="image left"><img src="images/pic01.jpg" alt="" /></span></p>
-                                    <p>this student goes to UML and is a ... that does ... and likes ... <p>
-                                    
-
-									<h2>Student</h2>
-									<p><span class="image left"><img src="images/pic01.jpg" alt="" /></span></p>
-                                    <p>this student goes to UML and is a ... that does ... and likes ... <p>
-
-									<h2>Student</h2>
-									<p><span class="image left"><img src="images/pic01.jpg" alt="" /></span></p>
-                                    <p>this student goes to UML and is a ... that does ... and likes ... <p>
-
-                                    
-									<h2>Student</h2>
-									<p><span class="image left"><img src="images/pic01.jpg" alt="" /></span></p>
-                                    <p>this student goes to UML and is a ... that does ... and likes ... <p>
-									
-								</section>
-                                <h2>Acknowledgements</h2>
-                                Thank you Schneider and UML! 
-						</div>
+					<!-- Team Members -->
+					<h2>Professor</h2>
+					<div class="team-member">
+						<img src="images/pic01.jpg" alt="Professor">
+						<p class="bio">This professor oversees the project and provides guidance.</p>
 					</div>
 
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="demo.html">Demo</a></li>
-										<li><a href="about.html">About</a></li>
-										
-								</nav>
-
-							
-
-							<!-- Section -->
-								
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
+					<h2>Students</h2>
+					<div class="team-member">
+						<img src="images/pic02.jpg" alt="Student 1">
+						<p class="bio">This student goes to UML, studies computer science, and enjoys AI research.</p>
 					</div>
 
+                    <div class="team-member">
+						<img src="images/pic02.jpg" alt="Student 2">
+						<p class="bio">This student goes to UML, studies computer science, and enjoys AI research.</p>
+					</div>
+
+					<div class="team-member">
+						<img src="images/pic03.jpg" alt="Student 3">
+						<p class="bio">This student is passionate about cybersecurity and ethical hacking.</p>
+					</div>
+
+					<div class="team-member">
+						<img src="images/pic04.jpg" alt="Student 4">
+						<p class="bio">This student loves data science and machine learning applications.</p>
+					</div>
+
+					<!-- Footer -->
+					<footer>
+						<h2>Acknowledgements</h2>
+						<p>Thank you Schneider and UML!</p>
+					</footer>
+				</div>
 			</div>
 
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li><a href="index.html">Homepage</a></li>
+							<li><a href="demo.html">Demo</a></li>
+							<li><a href="about.html">About</a></li>
+						</ul>
+					</nav>
+
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">
+							&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>
+				</div>
+			</div>
+		</div>
+
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 
 	</body>
 </html>
