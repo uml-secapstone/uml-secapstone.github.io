@@ -2108,9 +2108,32 @@ button,
 
 /* Active state styling */
 #menu ul li a.active {
+  position: relative;
   color: #007BFF;
 }
+#menu ul li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* Position below the text */
+  left: 0;
+  right: 0;
+  height: 2px; /* Thickness of the indicator bar */
+  background: #007BFF; /* Match your theme color */
+  border-radius: 1px; /* Optional slight rounding */
+  animation: slide-in 0.3s ease-out; /* Optional animation */
+}
 
+/* Optional animation */
+@keyframes slide-in {
+  from {
+    transform: translateY(5px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 #menu ul li a:hover {
   color: #007BFF; /* Change to your theme's accent color */
 }
