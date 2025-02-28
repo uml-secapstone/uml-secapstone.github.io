@@ -2277,8 +2277,9 @@ button,
 	position: fixed;
 	top: 0;
 	width: 100%;
-	background-color: #333; /* Adjust color as needed */
+	background-color: white; /* White background for the header */
 	z-index: 1000;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
 #menu ul {
@@ -2294,17 +2295,23 @@ button,
 }
 
 #menu ul li a {
-	color: white;
+	color: #333; /* Adjust color to match your theme */
 	text-decoration: none;
-	padding: 15px 20px;
+	padding: 10px 15px;
 	display: block;
+	font-size: 14px; /* Smaller font size */
 }
 
 #menu ul li a:hover {
-	background-color: #555; /* Adjust hover color as needed */
+	background-color: #f0f0f0; /* Light gray hover effect */
 }
 
 /* Add padding to the body to prevent content from being hidden under the fixed menu */
 body {
-	padding-top: 60px; /* Adjust based on the height of your menu */
+	padding-top: 50px; /* Adjust based on the height of your menu */
+}
+
+/* Remove sidebar styles */
+#sidebar {
+	display: none;
 }
