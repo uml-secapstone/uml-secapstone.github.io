@@ -2086,16 +2086,16 @@ button,
   list-style: none;
   padding: 0;
   margin: 0;
+  gap: 30px;
 }
 
-#menu ul li {
-  margin: 0 15px;
-}
+
 
 #menu ul li a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
+  padding: 10px 0;
 }
 
 #menu ul li a:hover {
@@ -2252,10 +2252,7 @@ button,
         -ms-transform: rotate(-180deg);
         transform: rotate(-180deg); }
 
-#menu > ul > li {
-  border-top: solid 1px rgba(210, 215, 217, 0.75);
-  margin: 0.5em 0 0 0;
-  padding: 0.5em 0 0 0; }
+
   #menu > ul > li > ul {
     color: #9fa3a6;
     display: none;
@@ -2263,9 +2260,7 @@ button,
     padding-left: 1em; }
     #menu > ul > li > ul a, #menu > ul > li > ul span {
       font-size: 0.8em; }
-    #menu > ul > li > ul > li {
-      margin: 0.125em 0 0 0;
-      padding: 0.125em 0 0 0; }
+    
   #menu > ul > li:first-child {
     border-top: 0;
     margin-top: 0;
