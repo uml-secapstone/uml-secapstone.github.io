@@ -2271,3 +2271,40 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+
+/* Add styles for the top navigation */
+#menu {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: #333; /* Adjust color as needed */
+	z-index: 1000;
+}
+
+#menu ul {
+	display: flex;
+	justify-content: center;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#menu ul li {
+	margin: 0 15px;
+}
+
+#menu ul li a {
+	color: white;
+	text-decoration: none;
+	padding: 15px 20px;
+	display: block;
+}
+
+#menu ul li a:hover {
+	background-color: #555; /* Adjust hover color as needed */
+}
+
+/* Add padding to the body to prevent content from being hidden under the fixed menu */
+body {
+	padding-top: 60px; /* Adjust based on the height of your menu */
+}
