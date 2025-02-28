@@ -2091,17 +2091,17 @@ button,
 #menu ul {
   display: flex;
   justify-content: center;
-  align-items: center; /* Ensure vertical alignment */
+  align-items: center;
   list-style: none;
   padding: 0;
   margin: 0;
-  height: 60px; /* Set a fixed height for the menu */
+  height: 60px;
 }
 
 #menu ul li {
   margin: 0 20px;
   padding: 0;
-  height: 100%; /* Make all list items the same height */
+  height: 100%;
   display: flex;
   align-items: center;
 }
@@ -2114,14 +2114,19 @@ button,
   display: flex;
   align-items: center;
   height: 100%;
-  position: relative; /* For positioning the active indicator */
+  position: relative;
   border: none;
   background: none;
+  text-transform: uppercase;
 }
 
 /* Remove any borders or lines */
 #menu ul li a:before,
-#menu ul li a:after {
+#menu ul li a:after,
+#header:before,
+#header:after,
+#menu:before,
+#menu:after {
   display: none;
 }
 
@@ -2131,7 +2136,7 @@ button,
   color: #007BFF;
 }
 
-/* Use a bottom border for active/hover state instead of any top lines */
+/* Use a bottom border for active/hover state */
 #menu ul li a:hover:after,
 #menu ul li a.active:after {
   content: '';
@@ -2144,17 +2149,21 @@ button,
   display: block;
 }
 
-/* Remove any horizontal lines in the header area */
-#header:before,
-#header:after,
-#menu:before,
-#menu:after {
-  display: none;
-}
-
 /* Ensure the wrapper has proper padding for the fixed header */
 #wrapper {
   padding-top: 60px;
+  margin-left: 0 !important;
+}
+
+/* Make main content full width */
+#main {
+  width: 100% !important;
+  margin-left: 0 !important;
+}
+
+/* Hide sidebar completely */
+#sidebar {
+  display: none !important;
 }
 
 /* Banner */
