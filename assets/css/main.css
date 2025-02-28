@@ -2071,41 +2071,36 @@ button,
 
 /* Header */
 #header {
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: -ms-flex;
+  position: fixed;
+  width: 100%;
+  background: #f4f4f4;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+}
+
+#menu ul {
   display: flex;
-  border-bottom: solid 5px #f56a6a;
-  padding: 6em 0 1em 0;
-  position: relative; }
-  #header > * {
-    -moz-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    margin-bottom: 0; }
-  #header .logo {
-    border-bottom: 0;
-    color: inherit;
-    font-family: "Roboto Slab", serif;
-    font-size: 1.125em; }
-  #header .icons {
-    text-align: right; }
-  @media screen and (max-width: 1680px) {
-    #header {
-      padding-top: 5em; } }
-  @media screen and (max-width: 736px) {
-    #header {
-      padding-top: 6.5em; }
-      #header .logo {
-        font-size: 1.25em;
-        margin: 0; }
-      #header .icons {
-        height: 5em;
-        line-height: 5em;
-        position: absolute;
-        right: -0.5em;
-        top: 0; } }
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menu ul li {
+  margin: 0 15px;
+}
+
+#menu ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+#menu ul li a:hover {
+  color: #007BFF; /* Change to your theme's accent color */
+}
 
 /* Banner */
 #banner {
