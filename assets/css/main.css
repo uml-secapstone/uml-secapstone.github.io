@@ -2077,93 +2077,33 @@ button,
   z-index: 1000;
   top: 0;
   left: 0;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-}
-
-#menu {
-  width: 100%;
-  border-top: none;
-  border-bottom: none;
+  padding: 10px 0;
 }
 
 #menu ul {
   display: flex;
   justify-content: center;
-  align-items: center;
   list-style: none;
   padding: 0;
   margin: 0;
-  height: 60px;
 }
 
 #menu ul li {
-  margin: 0 20px;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
+  margin: 0 15px;
 }
 
 #menu ul li a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
-  padding: 10px 15px;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  position: relative;
-  border: none;
-  background: none;
-  text-transform: uppercase;
 }
 
-/* Remove any borders or lines */
-#menu ul li a:before,
-#menu ul li a:after,
-#header:before,
-#header:after,
-#menu:before,
-#menu:after {
-  display: none;
+#menu ul li a:hover {
+  color: #007BFF; /* Change to your theme's accent color */
 }
 
-/* Style for active/hover state */
-#menu ul li a:hover,
-#menu ul li a.active {
-  color: #007BFF;
-}
-
-/* Use a bottom border for active/hover state */
-#menu ul li a:hover:after,
-#menu ul li a.active:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #007BFF;
-  display: block;
-}
-
-/* Ensure the wrapper has proper padding for the fixed header */
 #wrapper {
-  padding-top: 60px;
-  margin-left: 0 !important;
-}
-
-/* Make main content full width */
-#main {
-  width: 100% !important;
-  margin-left: 0 !important;
-}
-
-/* Hide sidebar completely */
-#sidebar {
-  display: none !important;
+  padding-top: 60px; /* Adjust based on header height */
 }
 
 /* Banner */
