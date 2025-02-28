@@ -2086,16 +2086,29 @@ button,
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 30px;
+  gap: 40px;
 }
 
-
+#menu ul li {
+  position: relative; /* For potential dropdowns */
+}
 
 #menu ul li a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
-  padding: 10px 0;
+  padding: 15px 0; /* Consistent vertical padding */
+  display: block;
+  transition: color 0.3s ease;
+}
+
+#menu ul li:not(:first-child)::before {
+  content: none !important;
+}
+
+/* Active state styling */
+#menu ul li a.active {
+  color: #007BFF;
 }
 
 #menu ul li a:hover {
@@ -2253,15 +2266,5 @@ button,
         transform: rotate(-180deg); }
 
 
-  #menu > ul > li > ul {
-    color: #9fa3a6;
-    display: none;
-    margin: 0.5em 0 1.5em 0;
-    padding-left: 1em; }
-    #menu > ul > li > ul a, #menu > ul > li > ul span {
-      font-size: 0.8em; }
-    
-  #menu > ul > li:first-child {
-    border-top: 0;
-    margin-top: 0;
-    padding-top: 0; }
+  
+
