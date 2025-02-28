@@ -2077,32 +2077,36 @@ button,
   z-index: 1000;
   top: 0;
   left: 0;
-  padding: 5px 0; /* Reduced padding for smaller header */
+  padding: 5px 0;
+  box-shadow: none; /* Remove any shadow or border */
 }
 
 #menu ul {
   display: flex;
   justify-content: center;
+  align-items: center; /* Center items vertically */
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 #menu ul li {
-  margin: 0 20px; /* Adjust spacing between items */
+  margin: 0 20px;
 }
 
 #menu ul li a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
-  padding: 10px 15px; /* Add padding for clickable area */
+  padding: 10px 15px;
+  display: inline-block; /* Ensure clickable area */
 }
 
 #menu ul li a:hover,
-#menu ul li a.active { /* Highlight active page */
-  color: #007BFF; /* Change to your theme's accent color */
+#menu ul li a.active {
+  color: #007BFF;
   border-bottom: 2px solid #007BFF; /* Underline active link */
+  box-shadow: none; /* Remove any shadow */
 }
 
 #wrapper {
