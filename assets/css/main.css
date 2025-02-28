@@ -2077,7 +2077,7 @@ button,
   z-index: 1000;
   top: 0;
   left: 0;
-  padding: 10px 0;
+  padding: 5px 0; /* Reduced padding for smaller header */
 }
 
 #menu ul {
@@ -2089,17 +2089,20 @@ button,
 }
 
 #menu ul li {
-  margin: 0 15px;
+  margin: 0 20px; /* Adjust spacing between items */
 }
 
 #menu ul li a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
+  padding: 10px 15px; /* Add padding for clickable area */
 }
 
-#menu ul li a:hover {
+#menu ul li a:hover,
+#menu ul li a.active { /* Highlight active page */
   color: #007BFF; /* Change to your theme's accent color */
+  border-bottom: 2px solid #007BFF; /* Underline active link */
 }
 
 #wrapper {
