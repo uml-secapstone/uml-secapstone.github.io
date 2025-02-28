@@ -2102,6 +2102,10 @@ button,
   color: #007BFF; /* Change to your theme's accent color */
 }
 
+#wrapper {
+  padding-top: 60px; /* Adjust based on header height */
+}
+
 /* Banner */
 #banner {
   padding: 6em 0 4em 0 ;
