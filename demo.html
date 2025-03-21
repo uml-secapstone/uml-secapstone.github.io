@@ -51,6 +51,9 @@
 						<header class="main">
 							<h1>Neural Network Simulation</h1>
 						</header>
+						<p>A neural network that consists of layers of "neurons" that process information. In classification, a neural network takes input data, processes it through layers, then decides which category it belongs to. For instance, if you give it a picture of a keyboard or a mouse, it learns patterns from past images and predicts whether the new image is a keyboard or mouse. </p>
+						<p>In machine learning, an epoch means going through the entire dataset once to recognize patterns. Batch sizes break up the number of samples processed at once. The learning rate of a model influences how quickly and effectively the model learns. A high learning rate can lead to faster learning, but may become unstable while a low learning rate can lead to slow training. Lastly, the loss result describes a measure of how inaccurate the model is - the goal is to reduce the loss so the model makes fewer mistakes. </p>
+						<hr class="major" />
 					<div class="container">
 						<div class="controls">
 							<h2>Controls</h2>
@@ -67,7 +70,9 @@
 							<div class="hyperparams">
 								<h3>Training Parameters</h3>
 								<label>Learning Rate: <input type="number" id="learningRate" value="0.01" step="0.001"></label>
-								<label>Epochs: <input type="number" id="epochs" value="50"></label>
+								<label>Epochs:    
+									<input type="number" id="epochs" value="50">
+								</label>
 								<label>Batch Size: <input type="number" id="batchSize" value="32"></label>
 							</div>
 			
