@@ -2,7 +2,7 @@ const chatbox = document.getElementById("chatbox");
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
 
-const API_URL = "http://10.248.57.146:5000/chat"; // IMPORTANT: Replace with IP on same network!!
+const API_URL = "https://0d8d-129-63-248-48.ngrok-free.app"; // IMPORTANT: Replace with IP on same network!!
 
 function addMessage(text, sender) {
   const msg = document.createElement("div");
