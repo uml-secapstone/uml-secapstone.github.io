@@ -1,0 +1,179 @@
+2025-04-11 15:16:06,584 [WARNING]  * Debugger is active!
+2025-04-11 15:16:06,601 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 15:16:21,369 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 15:16:21,380 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 15:16:22,819 [WARNING]  * Debugger is active!
+2025-04-11 15:16:22,835 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 15:19:24,826 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-11 15:19:24,826 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-11 15:19:24,831 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 15:19:25,709 [WARNING]  * Debugger is active!
+2025-04-11 15:19:25,721 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 15:21:45,113 [INFO] 127.0.0.1 - - [11/Apr/2025 15:21:45] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 15:21:54,811 [INFO] [20250411-152154-811278] New request from 127.0.0.1
+2025-04-11 15:21:54,811 [INFO] [20250411-152154-811278] Message received: Hello...
+2025-04-11 15:21:54,811 [INFO] [20250411-152154-811278] Calling OpenAI...
+2025-04-11 15:21:54,874 [ERROR] [20250411-152154-811278] Critical error:
+Traceback (most recent call last):
+  File "/Users/arthe/uml-secapstone.github.io/app.py", line 38, in chat
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 914, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 919, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 945, in _request
+    request = self._build_request(options, retries_taken=retries_taken)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 466, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 410, in _build_headers
+    headers = httpx.Headers(headers_dict)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/httpx/_models.py", line 76, in __init__
+    normalize_header_value(v, encoding),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/httpx/_utils.py", line 53, in normalize_header_value
+    return value.encode(encoding or "ascii")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe7' in position 171: ordinal not in range(128)
+2025-04-11 15:21:54,885 [INFO] 127.0.0.1 - - [11/Apr/2025 15:21:54] "[35m[1mPOST /chat HTTP/1.1[0m" 500 -
+2025-04-11 16:05:26,233 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:05:26,246 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:05:26,588 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:06:53,109 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-11 16:06:53,110 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-11 16:06:53,127 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:06:54,030 [WARNING]  * Debugger is active!
+2025-04-11 16:06:54,044 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 16:10:31,605 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-11 16:10:31,605 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-11 16:10:31,614 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:10:32,515 [WARNING]  * Debugger is active!
+2025-04-11 16:10:32,529 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 16:10:45,264 [INFO] 127.0.0.1 - - [11/Apr/2025 16:10:45] "GET / HTTP/1.1" 200 -
+2025-04-11 16:10:45,309 [INFO] 127.0.0.1 - - [11/Apr/2025 16:10:45] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-11 16:10:45,312 [INFO] 127.0.0.1 - - [11/Apr/2025 16:10:45] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-04-11 16:10:45,314 [INFO] 127.0.0.1 - - [11/Apr/2025 16:10:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-11 16:10:45,315 [INFO] 127.0.0.1 - - [11/Apr/2025 16:10:45] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-11 16:11:00,303 [INFO] 127.0.0.1 - - [11/Apr/2025 16:11:00] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:11:02,760 [INFO] 127.0.0.1 - - [11/Apr/2025 16:11:02] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:11:26,364 [INFO] 127.0.0.1 - - [11/Apr/2025 16:11:26] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:16:24,854 [INFO] 127.0.0.1 - - [11/Apr/2025 16:16:24] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:34:52,238 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:34:52,958 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:34:54,388 [WARNING]  * Debugger is active!
+2025-04-11 16:34:54,403 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 16:36:20,800 [INFO] 127.0.0.1 - - [11/Apr/2025 16:36:20] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:36:20,806 [INFO] [20250411-163620-806625] New request from 127.0.0.1
+2025-04-11 16:36:20,808 [INFO] [20250411-163620-806625] Message received: hello!...
+2025-04-11 16:36:20,808 [INFO] [20250411-163620-806625] Calling OpenAI...
+2025-04-11 16:36:21,530 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-04-11 16:36:21,531 [INFO] Retrying request to /chat/completions in 0.410961 seconds
+2025-04-11 16:36:21,993 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-04-11 16:36:21,993 [INFO] Retrying request to /chat/completions in 0.904126 seconds
+2025-04-11 16:36:22,962 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-04-11 16:36:22,964 [ERROR] [20250411-163620-806625] Critical error:
+Traceback (most recent call last):
+  File "/Users/arthe/uml-secapstone.github.io/app.py", line 52, in chat
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 914, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 919, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1008, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1057, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1008, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1057, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1023, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-04-11 16:36:22,970 [INFO] 127.0.0.1 - - [11/Apr/2025 16:36:22] "[35m[1mPOST /chat HTTP/1.1[0m" 500 -
+2025-04-11 16:37:38,678 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:37:38,688 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:37:39,457 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:37:40,902 [WARNING]  * Debugger is active!
+2025-04-11 16:37:40,919 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 16:38:41,937 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-11 16:38:41,937 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-11 16:38:41,946 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:38:42,872 [WARNING]  * Debugger is active!
+2025-04-11 16:38:42,890 [INFO]  * Debugger PIN: 227-153-341
+2025-04-11 16:38:47,410 [INFO] 127.0.0.1 - - [11/Apr/2025 16:38:47] "GET / HTTP/1.1" 200 -
+2025-04-11 16:38:54,037 [INFO] 127.0.0.1 - - [11/Apr/2025 16:38:54] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:38:54,043 [INFO] [20250411-163854-043708] Request received
+2025-04-11 16:38:54,044 [INFO] [20250411-163854-043708] Processing message: hello!...
+2025-04-11 16:38:54,044 [INFO] [20250411-163854-043708] Using API key: sk-pr...
+2025-04-11 16:38:54,253 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-04-11 16:38:54,254 [INFO] Retrying request to /chat/completions in 0.452040 seconds
+2025-04-11 16:38:54,766 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-04-11 16:38:54,767 [INFO] Retrying request to /chat/completions in 0.954378 seconds
+2025-04-11 16:38:55,782 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-04-11 16:38:55,784 [ERROR] [20250411-163854-043708] FAILED: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+Traceback (most recent call last):
+  File "/Users/arthe/uml-secapstone.github.io/app.py", line 56, in chat
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 914, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 919, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1008, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1057, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1008, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1057, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1023, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-04-11 16:38:55,797 [INFO] 127.0.0.1 - - [11/Apr/2025 16:38:55] "[35m[1mPOST /chat HTTP/1.1[0m" 500 -
+2025-04-11 16:42:37,717 [INFO] 127.0.0.1 - - [11/Apr/2025 16:42:37] "OPTIONS /chat HTTP/1.1" 200 -
+2025-04-11 16:55:11,045 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:55:11,047 [INFO]  * Detected change in '/Users/arthe/uml-secapstone.github.io/app.py', reloading
+2025-04-11 16:55:11,774 [INFO]  * Restarting with watchdog (fsevents)
+2025-04-11 16:57:04,418 [INFO]  * Restarting with watchdog (fsevents)

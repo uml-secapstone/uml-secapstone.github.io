@@ -1,46 +1,58 @@
-from flask import Flask, request, jsonify, make_response
-from openai import OpenAI  # Updated import
-import os
-from dotenv import load_dotenv
+from flask import Flask, request, jsonify
+from openai import OpenAI
 from flask_cors import CORS
-
-load_dotenv()
-
-# Initialize the client with your API key
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+import os
 
 app = Flask(__name__)
-CORS(app, resources={
-    r"/chat": {
-        "origins": ["https://uml-secapstone.github.io"],
-        "methods": ["POST"]
-    }
-})
+CORS(app)  # Keep your existing CORS config
+
+# Free model options
+FREE_MODELS = {
+    "kimi": "moonshotai/kimi-vl-a3b-thinking:free",
+    "mistral": "mistralai/mistral-7b-instruct:free", 
+    "claude": "anthropic/claude-3-haiku"  # Free tier limited
+}
+
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY")
+)
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    try:
-        data = request.get_json()
-        user_message = data.get("message", "")
-        
-        # Updated API call syntax
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": user_message}],
-            temperature=0.7
-        )
-        
-        # Get the response content
-        reply = response.choices[0].message.content
-        
-        return jsonify({"response": reply})
-        
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    data = request.get_json()
+    
+    # Allow model selection from frontend (defaults to kimi)
+    model = data.get("model", "kimi")  
+    selected_model = FREE_MODELS.get(model, FREE_MODELS["kimi"])
+    
+    response = client.chat.completions.create(
+        extra_headers={
+            "HTTP-Referer": data.get("site_url", "https://uml-secapstone.github.io"),
+            "X-Title": "UML Chat"
+        },
+        model=selected_model,
+        messages=[{"role": "user", "content": data["message"]}]
+    )
+    
+    return jsonify({
+        "response": response.choices[0].message.content,
+        "model_used": selected_model
+    })
 
-@app.route("/")
-def home():
-    return "ChatGPT API is running!"
+@app.route('/api/chat', methods=['POST'])
+def chat_proxy():
+    data = request.json
+    headers = {
+        'Authorization': f'Bearer {os.getenv("OPENROUTER_KEY")}',
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(
+        'https://openrouter.ai/api/v1/chat/completions',
+        headers=headers,
+        json=data
+    )
+    return jsonify(response.json())
 
 if __name__ == "__main__":
     app.run(debug=True)
