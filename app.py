@@ -1,44 +1,58 @@
-
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Make sure this import exists
-import requests
+from flask_cors import CORS
 import os
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
-# Enhanced CORS configuration
-CORS(app, resources={
-    r"/chat": {
-        "origins": ["https://uml-secapstone.github.io", "http://localhost:*"],
-        "methods": ["POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
-    }
-})
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY")
+)
 
-@app.route('/chat', methods=['POST'])
+@app.route('/chat', methods=['POST', 'OPTIONS'])
 def chat_proxy():
-    print("Incoming request headers:", request.headers)  # Debug log
-    print("Request data:", request.json)  # Debug log
-    
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'preflight'}), 200
+
     try:
-        response = requests.post(
-            'https://openrouter.ai/api/v1/chat/completions',
-            headers={
-                'Authorization': f'Bearer {os.getenv("OPENROUTER_API_KEY")}',
-                'Content-Type': 'application/json',
-                'HTTP-Referer': 'https://uml-secapstone.github.io',
-                'X-Title': 'UML Chat Demo'
-            },
-            json=request.json
+        # Accept frontend data
+        user_message = request.json.get("message", "")
+        image_url = request.json.get("image_url")
+
+        content = [{"type": "text", "text": user_message}]
+        if image_url:
+            content.append({
+                "type": "image_url",
+                "image_url": {
+                    "url": image_url
+                }
+            })
+
+        # Send to OpenRouter using OpenAI-compatible SDK
+        completion = client.chat.completions.create(
+            model="moonshotai/kimi-vl-a3b-thinking:free",
+            messages=[
+                {
+                    "role": "user",
+                    "content": content
+                }
+            ],
+            extra_headers={
+                "HTTP-Referer": "https://uml-secapstone.github.io",
+                "X-Title": "UML Chat Demo"
+            }
         )
-        print("OpenRouter response:", response.json())  # Debug log
-        return jsonify(response.json())
+
+        return jsonify({"content": completion.choices[0].message.content})
+
     except Exception as e:
-        print("Error:", str(e))  # Debug log
+        print("Server Error:", str(e))
         return jsonify({'error': str(e)}), 500
-    
+
 if __name__ == '__main__':
     app.run(debug=True)
