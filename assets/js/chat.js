@@ -22,25 +22,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Call your Render backend proxy
   async function callChatAPI(message) {
-    const response = await fetch("https://your-render-app.onrender.com/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            messages: [{
-                role: "user",
-                content: message
-            }]
-            // model parameter is now optional (handled by backend)
-        })
-    });
+    try {
+        const response = await fetch(BACKEND_URL, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                messages: [{
+                    role: "user",
+                    content: message
+                }]
+            })
+        });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `API error: ${response.status}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("API call failed:", error);
+        throw error;
     }
-
-    return await response.json();
-  }
+}
   // Handle message sending
   async function sendMessage() {
       const message = messageInput.value.trim();
