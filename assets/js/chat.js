@@ -1,8 +1,9 @@
 // config.js - Never commit this to public repos! 
 // chat.js - OpenRouter Chat Implementation
+//https://uml-secapstone-github-io.onrender.com
 document.addEventListener("DOMContentLoaded", function() {
-  // Configuration - REPLACE WITH YOUR ACTUAL KEY
-  const OPENROUTER_API_KEY = "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"; 
+  // Configuration (no API key needed!)
+  const BACKEND_URL = "https://uml-secapstone-github-io.onrender.com/chat"; // Your Render URL
   const DEFAULT_MODEL = "mistralai/mistral-7b-instruct:free";
   
   // DOM Elements
@@ -19,34 +20,27 @@ document.addEventListener("DOMContentLoaded", function() {
       chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  // Call OpenRouter API
-  async function callOpenRouter(message) {
-      try {
-          const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-              method: "POST",
-              headers: {
-                  "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-                  "Content-Type": "application/json",
-                  "HTTP-Referer": window.location.href,
-                  "X-Title": "UML Chat Demo"
-              },
-              body: JSON.stringify({
-                  model: DEFAULT_MODEL,
-                  messages: [{ role: "user", content: message }]
-              })
-          });
+  // Call your Render backend proxy
+  async function callChatAPI(message) {
+    const response = await fetch("https://your-render-app.onrender.com/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            messages: [{
+                role: "user",
+                content: message
+            }]
+            // model parameter is now optional (handled by backend)
+        })
+    });
 
-          if (!response.ok) {
-              throw new Error(`API error: ${response.status}`);
-          }
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `API error: ${response.status}`);
+    }
 
-          return await response.json();
-      } catch (error) {
-          console.error("API call failed:", error);
-          throw error;
-      }
+    return await response.json();
   }
-
   // Handle message sending
   async function sendMessage() {
       const message = messageInput.value.trim();
@@ -62,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
       chatbox.appendChild(typingIndicator);
 
       try {
-          const response = await callOpenRouter(message);
+          const response = await callChatAPI(message);
           chatbox.removeChild(typingIndicator);
           addMessage(response.choices[0].message.content, "bot");
       } catch (error) {
