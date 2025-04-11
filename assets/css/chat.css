@@ -8,6 +8,14 @@
   background: #f9f9f9;
   border-radius: 5px;
 }
+.message.thought {
+  font-style: italic;
+  color: #888;
+  background-color: #f9f9f9;
+  border-left: 4px solid #ccc;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
 
 .message {
   margin: 10px 0;

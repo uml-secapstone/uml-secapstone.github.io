@@ -2,16 +2,18 @@
 // chat.js - OpenRouter Chat Implementation
 //https://uml-secapstone-github-io.onrender.com
 document.addEventListener("DOMContentLoaded", function() {
-  // Configuration (no API key needed!)
-  const BACKEND_URL = "https://uml-secapstone-github-io.onrender.com/chat"; // Your Render URL
-  const DEFAULT_MODEL = "mistralai/mistral-7b-instruct:free";
+  // Environment-aware configuration
+  const isLocal = window.location.hostname === "localhost" || 
+                 window.location.hostname === "127.0.0.1";
   
-  // DOM Elements
+  const BACKEND_URL = isLocal 
+      ? "http://localhost:5000/chat"  // For local Flask development
+      : "https://uml-secapstone-github-io.onrender.com/chat";  // Render production
+
   const chatbox = document.getElementById("chatbox");
   const messageInput = document.getElementById("messageInput");
   const sendButton = document.getElementById("sendButton");
 
-  // Add message to chat
   function addMessage(text, sender) {
       const msg = document.createElement("div");
       msg.className = `message ${sender}`;
@@ -20,78 +22,88 @@ document.addEventListener("DOMContentLoaded", function() {
       chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  // Call your Render backend proxy
-  async function callChatAPI(message) {
+  async function callChatAPI(message, imageUrl = null) {
     try {
-        console.log("Sending request to:", BACKEND_URL);  // Debug log
         const response = await fetch(BACKEND_URL, {
             method: "POST",
             mode: "cors",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                messages: [{
-                    role: "user",
-                    content: message
-                }]
+                message: message,
+                image_url: imageUrl
             })
         });
 
-        console.log("Received status:", response.status);  // Debug log
-        
         if (!response.ok) {
-            let errorData;
-            try {
-                errorData = await response.json();
-            } catch (e) {
-                errorData = { error: await response.text() };
-            }
-            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `HTTP ${response.status}`);
         }
 
         return await response.json();
     } catch (error) {
-        console.error("API call failed:", error);
+        console.error("API Error:", error);
         throw error;
     }
 }
-  // Handle message sending
-  async function sendMessage() {
-    const message = messageInput.value.trim();
-    if (!message) return;
 
-    addMessage(message, "user");
-    messageInput.value = "";
 
-    // Add typing indicator with a unique ID
-    const typingIndicator = document.createElement("div");
-    typingIndicator.id = "typing-indicator";  // Add this line
-    typingIndicator.className = "message bot typing";
-    typingIndicator.textContent = "Thinking...";
-    chatbox.appendChild(typingIndicator);
+async function sendMessage() {
+  const message = messageInput.value.trim();
+  if (!message) return;
 
-    try {
-        const response = await callChatAPI(message);
-        
-        // Safely remove typing indicator
-        const indicator = document.getElementById("typing-indicator");
-        if (indicator) {
-            indicator.remove();
-        }
-        
-        addMessage(response.choices[0].message.content, "bot");
-    } catch (error) {
-        // Safely remove typing indicator even on error
-        const indicator = document.getElementById("typing-indicator");
-        if (indicator) {
-            indicator.remove();
-        }
-        addMessage(`Error: ${error.message}`, "error");
+  addMessage(message, "user");
+  messageInput.value = "";
+
+  const typingIndicator = document.createElement("div");
+  typingIndicator.id = "typing-indicator";
+  typingIndicator.className = "message bot typing";
+  typingIndicator.textContent = "Thinking...";
+  chatbox.appendChild(typingIndicator);
+
+  try {
+      const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"; // static for now
+      const response = await callChatAPI(message, imageUrl);
+
+      // Remove typing indicator
+      const indicator = document.getElementById("typing-indicator");
+      if (indicator) indicator.remove();
+
+      // Check if the model returned internal thoughts
+if (response.content) {
+  const content = response.content;
+
+  // Extract internal thought (optional) and final message
+  const thinkMatch = content.match(/◁think▷([\s\S]*?)◁\/think▷/);
+  const internalThought = thinkMatch ? thinkMatch[1].trim() : null;
+  const finalMessage = content.replace(/◁think▷[\s\S]*?◁\/think▷/, "").trim();
+
+  if (internalThought) {
+          // Show the internal thought in a lighter or italic style
+          addMessage("💭 " + internalThought, "thought");
+      }
+
+      addMessage(finalMessage, "bot");
+
+    } else if (response.error) {
+      addMessage("Error from API: " + response.error, "error");
+      console.error("Full API Error:", response);
+    } else {
+      addMessage("Unexpected response format", "error");
+      console.error("Full Unexpected Response:", response);
     }
+
+  } catch (error) {
+      const indicator = document.getElementById("typing-indicator");
+      if (indicator) indicator.remove();
+
+      addMessage("Something went wrong: " + error.message, "error");
+      console.error("Caught Exception:", error);
+  }
 }
 
-  // Event listeners
+
   sendButton.addEventListener("click", sendMessage);
   messageInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
