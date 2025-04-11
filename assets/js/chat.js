@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
       chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  async function callChatAPI(message, imageUrl = null) {
+  async function callChatAPI(message) {
     try {
         const response = await fetch(BACKEND_URL, {
             method: "POST",
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             body: JSON.stringify({
                 message: message,
-                image_url: imageUrl
+              
             })
         });
 
@@ -56,6 +56,7 @@ async function sendMessage() {
   addMessage(message, "user");
   messageInput.value = "";
 
+  // Create and show "Thinking..." indicator
   const typingIndicator = document.createElement("div");
   typingIndicator.id = "typing-indicator";
   typingIndicator.className = "message bot typing";
@@ -63,45 +64,39 @@ async function sendMessage() {
   chatbox.appendChild(typingIndicator);
 
   try {
-      const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"; // static for now
-      const response = await callChatAPI(message, imageUrl);
+      // If using image, pass it here. If not, just pass message
+      const response = await callChatAPI(message); 
 
-      // Remove typing indicator
-      const indicator = document.getElementById("typing-indicator");
-      if (indicator) indicator.remove();
+      // Always remove the "thinking" bubble once response is received
+      document.getElementById("typing-indicator")?.remove();
 
-      // Check if the model returned internal thoughts
-if (response.content) {
-  const content = response.content;
+      // Parse and show response
+      if (response?.content) {
+          const content = response.content;
+          const thinkMatch = content.match(/◁think▷([\s\S]*?)◁\/think▷/);
+          const internalThought = thinkMatch ? thinkMatch[1].trim() : null;
+          const finalMessage = content.replace(/◁think▷[\s\S]*?◁\/think▷/, "").trim();
 
-  // Extract internal thought (optional) and final message
-  const thinkMatch = content.match(/◁think▷([\s\S]*?)◁\/think▷/);
-  const internalThought = thinkMatch ? thinkMatch[1].trim() : null;
-  const finalMessage = content.replace(/◁think▷[\s\S]*?◁\/think▷/, "").trim();
+          if (internalThought) {
+              addMessage("💭 " + internalThought, "thought");
+              await new Promise(res => setTimeout(res, 500));
+          }
 
-  if (internalThought) {
-          // Show the internal thought in a lighter or italic style
-          addMessage("💭 " + internalThought, "thought");
+          addMessage(finalMessage, "bot");
+      } else if (response?.error) {
+          addMessage("Error from API: " + response.error, "error");
+      } else {
+          addMessage("Unexpected response format", "error");
+          console.error("Unexpected response:", response);
       }
 
-      addMessage(finalMessage, "bot");
-
-    } else if (response.error) {
-      addMessage("Error from API: " + response.error, "error");
-      console.error("Full API Error:", response);
-    } else {
-      addMessage("Unexpected response format", "error");
-      console.error("Full Unexpected Response:", response);
-    }
-
   } catch (error) {
-      const indicator = document.getElementById("typing-indicator");
-      if (indicator) indicator.remove();
-
+      document.getElementById("typing-indicator")?.remove();
       addMessage("Something went wrong: " + error.message, "error");
-      console.error("Caught Exception:", error);
+      console.error(error);
   }
 }
+
 
 
   sendButton.addEventListener("click", sendMessage);

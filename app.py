@@ -22,16 +22,9 @@ def chat_proxy():
     try:
         # Accept frontend data
         user_message = request.json.get("message", "")
-        image_url = request.json.get("image_url")
 
         content = [{"type": "text", "text": user_message}]
-        if image_url:
-            content.append({
-                "type": "image_url",
-                "image_url": {
-                    "url": image_url
-                }
-            })
+       
 
         # Send to OpenRouter using OpenAI-compatible SDK
         completion = client.chat.completions.create(
