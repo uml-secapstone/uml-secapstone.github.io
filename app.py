@@ -10,7 +10,12 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/chat": {
+        "origins": ["https://uml-secapstone.github.io"],
+        "methods": ["POST"]
+    }
+})
 
 @app.route("/chat", methods=["POST"])
 def chat():

@@ -2,7 +2,7 @@ const chatbox = document.getElementById("chatbox");
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
 
-const API_URL = "https://uml-secapstone-github-io.onrender.com"; // <-- This should call your Flask backend
+const API_URL = "https://uml-secapstone-github-io.onrender.com/chat"; // <-- This should call your Flask backend
 
 function addMessage(text, sender) {
   const msg = document.createElement("div");
