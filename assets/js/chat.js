@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Call your Render backend proxy
   async function callChatAPI(message) {
     try {
+        console.log("Sending request to:", BACKEND_URL);  // Debug log
         const response = await fetch(BACKEND_URL, {
             method: "POST",
             mode: "cors",
@@ -37,8 +38,15 @@ document.addEventListener("DOMContentLoaded", function() {
             })
         });
 
+        console.log("Received status:", response.status);  // Debug log
+        
         if (!response.ok) {
-            const errorData = await response.json();
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch (e) {
+                errorData = { error: await response.text() };
+            }
             throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
         }
 
@@ -50,27 +58,38 @@ document.addEventListener("DOMContentLoaded", function() {
 }
   // Handle message sending
   async function sendMessage() {
-      const message = messageInput.value.trim();
-      if (!message) return;
+    const message = messageInput.value.trim();
+    if (!message) return;
 
-      addMessage(message, "user");
-      messageInput.value = "";
+    addMessage(message, "user");
+    messageInput.value = "";
 
-      // Add typing indicator
-      const typingIndicator = document.createElement("div");
-      typingIndicator.className = "message bot typing";
-      typingIndicator.textContent = "Thinking...";
-      chatbox.appendChild(typingIndicator);
+    // Add typing indicator with a unique ID
+    const typingIndicator = document.createElement("div");
+    typingIndicator.id = "typing-indicator";  // Add this line
+    typingIndicator.className = "message bot typing";
+    typingIndicator.textContent = "Thinking...";
+    chatbox.appendChild(typingIndicator);
 
-      try {
-          const response = await callChatAPI(message);
-          chatbox.removeChild(typingIndicator);
-          addMessage(response.choices[0].message.content, "bot");
-      } catch (error) {
-          chatbox.removeChild(typingIndicator);
-          addMessage(`Error: ${error.message}`, "error");
-      }
-  }
+    try {
+        const response = await callChatAPI(message);
+        
+        // Safely remove typing indicator
+        const indicator = document.getElementById("typing-indicator");
+        if (indicator) {
+            indicator.remove();
+        }
+        
+        addMessage(response.choices[0].message.content, "bot");
+    } catch (error) {
+        // Safely remove typing indicator even on error
+        const indicator = document.getElementById("typing-indicator");
+        if (indicator) {
+            indicator.remove();
+        }
+        addMessage(`Error: ${error.message}`, "error");
+    }
+}
 
   // Event listeners
   sendButton.addEventListener("click", sendMessage);
