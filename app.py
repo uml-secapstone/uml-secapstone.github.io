@@ -1,23 +1,29 @@
+
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Make sure this import exists
 import requests
 import os
 from dotenv import load_dotenv
-from flask_cors import CORS
 
 load_dotenv()
-app = Flask(__name__)
-CORS(app)  # Allow requests from your GitHub Pages domain
 
-# In your app.py on Render
+app = Flask(__name__)
+
+# Enhanced CORS configuration
+CORS(app, resources={
+    r"/chat": {
+        "origins": ["https://uml-secapstone.github.io", "http://localhost:*"],
+        "methods": ["POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
+
 @app.route('/chat', methods=['POST'])
 def chat_proxy():
+    print("Incoming request headers:", request.headers)  # Debug log
+    print("Request data:", request.json)  # Debug log
+    
     try:
-        # Get and validate JSON
-        data = request.get_json()
-        if not data or 'messages' not in data:
-            return jsonify({"error": "Invalid request format"}), 400
-        
-        # Forward to OpenRouter
         response = requests.post(
             'https://openrouter.ai/api/v1/chat/completions',
             headers={
@@ -26,13 +32,13 @@ def chat_proxy():
                 'HTTP-Referer': 'https://uml-secapstone.github.io',
                 'X-Title': 'UML Chat Demo'
             },
-            json={
-                "model": data.get("model", "mistralai/mistral-7b-instruct:free"),
-                "messages": data["messages"]
-            }
+            json=request.json
         )
+        print("OpenRouter response:", response.json())  # Debug log
         return jsonify(response.json())
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print("Error:", str(e))  # Debug log
+        return jsonify({'error': str(e)}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)
