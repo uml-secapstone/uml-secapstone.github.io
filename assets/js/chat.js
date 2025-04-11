@@ -2,7 +2,7 @@ const chatbox = document.getElementById("chatbox");
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
 
-const API_URL = "https://chatapp-cvx1ofq08-tays-projects-915a2c69.vercel.app"; // IMPORTANT: Replace with IP on same network!!
+const API_URL = "chatapp-sooty-two.vercel.app"; // IMPORTANT: Replace with IP on same network!!
 
 function addMessage(text, sender) {
   const msg = document.createElement("div");
