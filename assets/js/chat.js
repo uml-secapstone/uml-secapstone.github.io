@@ -2,8 +2,7 @@ const chatbox = document.getElementById("chatbox");
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
 
-// Replace with YOUR OpenAI API key (for testing only!)
-const OPENAI_API_KEY = "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";
+const API_URL = "https://uml-secapstone-github-io.onrender.com"; // <-- This should call your Flask backend
 
 function addMessage(text, sender) {
   const msg = document.createElement("div");
@@ -22,26 +21,23 @@ async function sendMessage() {
   addMessage("Typing...", "bot");
 
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: userMessage }],
-        temperature: 0.7,
+        message: userMessage
       }),
     });
 
     const data = await res.json();
     chatbox.lastChild.remove(); // remove "Typing..."
 
-    if (data.choices && data.choices.length > 0) {
-      addMessage(data.choices[0].message.content.trim(), "bot");
+    if (data.response) {
+      addMessage(data.response, "bot");
     } else {
-      addMessage("No response from ChatGPT.", "bot");
+      addMessage("No response from the bot.", "bot");
     }
   } catch (err) {
     console.error("API error:", err);
